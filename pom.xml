@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.fusesource</groupId>
+    <artifactId>camel-cdi</artifactId>
+    <version>1.0</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <glassfish.version>3.1.1</glassfish.version>
+        <cdi.version>1.1.EDR1.2</cdi.version>
+        <junit.version>4.8.2</junit.version>
+        <war.plugin.version>2.1.1</war.plugin.version>
+        <compiler-plugin-version>2.3.2</compiler-plugin-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <h2.version>1.3.162</h2.version>
+        <openjpa.version>2.1.1</openjpa.version>
+        <camel.version>2.10-SNAPSHOT</camel.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- J2EE 6 -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>${glassfish.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Camel -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-cdi</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <!-- JPA & H2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openjpa</groupId>
+            <artifactId>openjpa-all</artifactId>
+            <version>${openjpa.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- LOG -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <!-- Junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>glassfish-maven-repository.dev.java.net</id>
+            <name>GlassFish Maven Repository</name>
+            <url>http://download.java.net/maven/glassfish</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>glassfish-maven-repository.dev.java.net</id>
+            <name>GlassFish Maven Repository</name>
+            <url>http://download.java.net/maven/glassfish</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin-version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${war.plugin.version}</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.glassfish</groupId>
+                <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                <version>3.1.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.core</artifactId>
+                        <version>4.2.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <goalPrefix>glassfish</goalPrefix>
+                    <app>target/${project.name}-${project.version}.war</app>
+                    <port>8080</port>
+                    <contextRoot>${project.name}</contextRoot>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
