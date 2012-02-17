@@ -1,6 +1,6 @@
 package com.fusesource.cdi.camel.simple;
 
-import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.component.cdi.CdiCamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,8 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 
 /**
@@ -22,8 +22,8 @@ public class BootStrap {
 
     Logger logger = LoggerFactory.getLogger(BootStrap.class);
 
-    @Inject @Named(value = "simpleContext")
-    DefaultCamelContext camelCtx;
+    @Inject
+    CdiCamelContext camelCtx;
 
     @Inject
     SimpleCamelRoute simpleRoute;
@@ -48,5 +48,7 @@ public class BootStrap {
     public void stop() throws Exception {
        camelCtx.stop();
     }
+
+
 
 }
