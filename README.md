@@ -35,7 +35,7 @@ The project can be started locally using the command
 
 as we have configured in the pom.xml project the glassfish embedded maven plugin.
 
-When Glassfish is started, the log EIP of Camel will produces the following output every 10s.
+When Glassfish is started, the log EIP of Camel will produce the following output every 10s.
 
     INFO: >> Response : >> Hello Bean Injected user.
     INFO: >> Response : >> Hello Bean Injected user.
