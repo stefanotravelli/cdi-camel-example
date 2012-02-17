@@ -11,13 +11,13 @@ import javax.inject.Named;
  */
 public class SimpleCamelRoute extends RouteBuilder {
 
-        @Named("timerUri") @Produces
+        @Named("uri") @Produces
         String timerUri = "timer://simple?fixedRate=true&period=10s";
 
         @Override
         public void configure() throws Exception {
 
-            from("timer-simple")
+            from("endpoint")
                .setBody()
                  .simple("Bean Injected")
 

@@ -2,7 +2,6 @@ package com.fusesource.cdi.camel.simple;
 
 import org.apache.camel.Endpoint;
 import org.apache.camel.component.cdi.CdiBeanRegistry;
-import org.apache.camel.component.timer.TimerEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
 
 import javax.enterprise.inject.Produces;
@@ -26,10 +25,9 @@ public class CdiCamelContext {
         return context;
     }
 
-    @Named("timer-simple") @Produces
-    public TimerEndpoint createMyTimerEndpoint(@Named("timerUri") String timerUri) {
-        Endpoint myEndpoint = this.context.getEndpoint(timerUri);
-        return (TimerEndpoint)myEndpoint ;
+    @Named("endpoint") @Produces
+    public Endpoint createEndpoint(@Named("uri") String uri) {
+        return context.getEndpoint(uri);
     }
 
 }
