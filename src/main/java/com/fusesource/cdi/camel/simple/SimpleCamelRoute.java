@@ -2,14 +2,17 @@ package com.fusesource.cdi.camel.simple;
 
 import org.apache.camel.builder.RouteBuilder;
 
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
+
 /**
  * User: charlesmoulliard
  * Date: 16/02/12.
  */
 public class SimpleCamelRoute extends RouteBuilder {
 
-        // @Inject @Named("timer-simple")
-        // Endpoint timerEndpoint;
+        @Named("timerUri") @Produces
+        String timerUri = "timer://simple?fixedRate=true&period=10s";
 
         @Override
         public void configure() throws Exception {

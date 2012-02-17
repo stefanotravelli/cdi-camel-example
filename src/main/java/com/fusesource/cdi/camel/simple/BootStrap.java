@@ -29,7 +29,6 @@ public class BootStrap {
     @PostConstruct
     public void init() throws Exception {
             logger.info(">> Create CamelContext and register Camel Route.");
-            //camelCtx = createContext();
             camelCtx.addRoutes(new SimpleCamelRoute());
             camelCtx.start();
             logger.info(">> CamelContext created and camel route started.");
