@@ -26,10 +26,13 @@ public class BootStrap {
     @Named(value = "simpleContext")
     DefaultCamelContext camelCtx;
 
+    @Inject @Property(timerUri = "timer://simple?fixedRate=true&period=10s")
+    SimpleCamelRoute simpleRoute;
+
     @PostConstruct
     public void init() throws Exception {
             logger.info(">> Create CamelContext and register Camel Route.");
-            camelCtx.addRoutes(new SimpleCamelRoute());
+            camelCtx.addRoutes(simpleRoute);
             camelCtx.start();
             logger.info(">> CamelContext created and camel route started.");
     }

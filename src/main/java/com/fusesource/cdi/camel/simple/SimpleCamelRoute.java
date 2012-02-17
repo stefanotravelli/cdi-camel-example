@@ -2,33 +2,33 @@ package com.fusesource.cdi.camel.simple;
 
 import org.apache.camel.builder.RouteBuilder;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Named;
-
 /**
  * User: charlesmoulliard
  * Date: 16/02/12.
  */
 public class SimpleCamelRoute extends RouteBuilder {
 
-        @Named("uri") @Produces
-        String timerUri = "timer://simple?fixedRate=true&period=10s";
+    private String timerUri;
 
-        @Override
-        public void configure() throws Exception {
+    public void setTimerUri(String timerUri) {
+        this.timerUri = timerUri;
+    }
 
-            from("endpoint")
-               .setBody()
-                 .simple("Bean Injected")
+    @Override
+    public void configure() throws Exception {
 
-            // Lookup for bean injected by CDIcontainer
-            // The HellowWorld class is annotated using @Named
+        from(timerUri)
+            .setBody()
+            .simple("Bean Injected")
+
+                    // Lookup for bean injected by CDIcontainer
+                    // The HellowWorld class is annotated using @Named
             .beanRef("helloWorld", "sayHello")
 
-            // Using Camel lookup mechanism
-            // .bean(HelloWorld.class,"sayHello")
+                    // Using Camel lookup mechanism
+                    // .bean(HelloWorld.class,"sayHello")
 
             .log(">> Response : ${body}");
 
-        }
     }
+}

@@ -25,7 +25,8 @@ public class CdiCamelContext {
         return context;
     }
 
-    @Named("endpoint") @Produces
+    //@Named("endpoint")
+    @Produces
     public Endpoint createEndpoint(@Named("uri") String uri) {
         return context.getEndpoint(uri);
     }
