@@ -10,16 +10,12 @@ public class SimpleCamelRoute extends RouteBuilder {
 
     private String timerUri;
 
-    public void setTimerUri(String timerUri) {
-        this.timerUri = timerUri;
-    }
-
     @Override
     public void configure() throws Exception {
 
         from(timerUri)
             .setBody()
-            .simple("Bean Injected")
+                .simple("Bean Injected")
 
                     // Lookup for bean injected by CDIcontainer
                     // The HellowWorld class is annotated using @Named
@@ -31,4 +27,9 @@ public class SimpleCamelRoute extends RouteBuilder {
             .log(">> Response : ${body}");
 
     }
+
+    public void setTimerUri(String timerUri) {
+        this.timerUri = timerUri;
+    }
+
 }
