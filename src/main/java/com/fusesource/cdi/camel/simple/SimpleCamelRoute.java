@@ -1,10 +1,6 @@
 package com.fusesource.cdi.camel.simple;
 
-import org.apache.camel.Endpoint;
 import org.apache.camel.builder.RouteBuilder;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * User: charlesmoulliard
@@ -12,20 +8,23 @@ import javax.inject.Named;
  */
 public class SimpleCamelRoute extends RouteBuilder {
 
-        @Inject @Named("timer:simple")
-        Endpoint timerEndpoint;
+        // @Inject @Named("timer-simple")
+        // Endpoint timerEndpoint;
 
         @Override
         public void configure() throws Exception {
 
-            from(timerEndpoint)
+            from("timer-simple")
                .setBody()
                  .simple("Bean Injected")
+
             // Lookup for bean injected by CDIcontainer
             // The HellowWorld class is annotated using @Named
-            .bean(HelloWorld.class, "sayHello")
+            .beanRef("helloWorld", "sayHello")
+
             // Using Camel lookup mechanism
             // .bean(HelloWorld.class,"sayHello")
+
             .log(">> Response : ${body}");
 
         }
