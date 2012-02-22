@@ -9,9 +9,9 @@ with javax.ejb.Startup annotation, this class is started by the CDI-EJB containe
 When the @PreConstruct annotation is called, then we inject a CdiCamelContext objet, register
 a SimpleCamelRoute using @Inject annotation and starts the Camel Route.
 
-When you look to the Camel code, you can see that we do a lookup to find another bean "helloWorlkd"
+When you look to the Camel code, you can see that we do a lookup to find another bean "helloWorld"
 which has been injected. This is possible because the CdiCamelContext registers a Camel Registry containing
-a reference to the CDI BeanManager.
+a reference to a CDI BeanManager.
 
     @Override
     public void configure() throws Exception {
