@@ -3,30 +3,7 @@
 ## Simple Example using Camel in a CDI environment
 
 With Apache Camel 2.10, it will be possible to deploy Camel Integration project
-in a CDI container (JSR299, JSR330). The following example shows how we can bootstrap
-an Apache Camel Container in a class which is a javax.ejb.Singleton. In combination
-with javax.ejb.Startup annotation, this class is started by the CDI-EJB container at startup.
-When the @PreConstruct annotation is called, then we inject a CdiCamelContext objet, register
-a SimpleCamelRoute using @Inject annotation and starts the Camel Route.
-
-When you look to the Camel code, you can see that we do a lookup to find another bean "helloWorld"
-which has been injected. This is possible because the CdiCamelContext registers a Camel Registry containing
-a reference to a CDI BeanManager.
-
-    @Override
-    public void configure() throws Exception {
-
-        from(timerUri)
-            .setBody()
-                .simple("Bean Injected")
-
-            // Lookup for bean injected by CDIcontainer
-            // The HellowWorld class is annotated using @Named
-            .beanRef("helloWorld", "sayHello")
-
-            .log(">> Response : ${body}");
-
-    }
+in a CDI container (JSR299, JSR330).
 
 
 The project can be started locally using the command
