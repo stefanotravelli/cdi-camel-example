@@ -8,22 +8,17 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.enterprise.inject.Default;
 
 
-/**
- * User: charlesmoulliard
- * Date: 16/02/12
- */
 @Singleton
 @Startup
 public class BootStrap {
 
     Logger logger = LoggerFactory.getLogger(BootStrap.class);
 
-    @Inject
+    @Inject @Default
     CdiCamelContext camelCtx;
 
     @Inject

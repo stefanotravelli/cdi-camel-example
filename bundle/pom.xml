@@ -5,12 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.fusesource</groupId>
-    <artifactId>camel-cdi</artifactId>
+    <artifactId>camel-cdi-bundle</artifactId>
     <version>1.0</version>
-    <modules>
-        <module>bundle</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>bundle</packaging>
 
     <properties>
         <glassfish.version>3.1.1</glassfish.version>
@@ -19,8 +16,6 @@
         <war.plugin.version>2.1.1</war.plugin.version>
         <compiler-plugin-version>2.3.2</compiler-plugin-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <h2.version>1.3.162</h2.version>
-        <openjpa.version>2.1.1</openjpa.version>
         <camel.version>2.10-SNAPSHOT</camel.version>
     </properties>
 
@@ -50,27 +45,6 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-cdi</artifactId>
             <version>${camel.version}</version>
-        </dependency>
-
-        <!-- JPA & H2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa-all</artifactId>
-            <version>${openjpa.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Weld -->
-        <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se</artifactId>
-            <version>1.1.0.Final</version>
         </dependency>
 
         <!-- LOG -->
@@ -123,40 +97,26 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${war.plugin.version}</version>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.3.7</version>
+                <extensions>true</extensions>
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <instructions>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>!com.fusesource.cdi.camel*</Export-Package>
+                        <Import-Package>*</Import-Package>
+                        <Private-Package>com.fusesource.cdi.camel.simple</Private-Package>
+                        <Implementation-Title>Apache Camel CDI Example</Implementation-Title>
+                        <Implementation-Version>${project.version}</Implementation-Version>
+                        <Include-Resource>${project.basedir}/src/main/resources</Include-Resource>
+                        <_failok>false</_failok>
+                    </instructions>
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.glassfish</groupId>
-                <artifactId>maven-embedded-glassfish-plugin</artifactId>
-                <version>3.1.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.osgi</groupId>
-                        <artifactId>org.osgi.core</artifactId>
-                        <version>4.2.0</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <goalPrefix>glassfish</goalPrefix>
-                    <app>target/${project.name}-${project.version}.war</app>
-                    <port>8080</port>
-                    <contextRoot>${project.name}</contextRoot>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
 
