@@ -8,6 +8,7 @@
     <artifactId>camel-cdi-bundle</artifactId>
     <version>1.0</version>
     <packaging>bundle</packaging>
+    <name>Camel CDI Example :: OSGI Bundle</name>
 
     <properties>
         <glassfish.version>3.1.1</glassfish.version>

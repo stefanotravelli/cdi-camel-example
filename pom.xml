@@ -7,10 +7,8 @@
     <groupId>com.fusesource</groupId>
     <artifactId>camel-cdi</artifactId>
     <version>1.0</version>
-    <modules>
-        <module>bundle</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
+    <name>Camel CDI Example :: WAR</name>
 
     <properties>
         <glassfish.version>3.1.1</glassfish.version>
