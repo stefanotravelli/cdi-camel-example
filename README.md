@@ -1,6 +1,4 @@
-# Camel CDI
-
-## Simple Example using Camel in a CDI environment
+# Example of Camel Route deployed in a CDI container
 
 With Apache Camel 2.10, it will be possible to deploy Camel Integration project
 in a CDI container (JSR299, JSR330).
