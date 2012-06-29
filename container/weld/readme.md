@@ -2,7 +2,7 @@
 
 ## Execute project
 
-mvn clean package exec:java
+mvn compile exec:java
 
 ## Result
 

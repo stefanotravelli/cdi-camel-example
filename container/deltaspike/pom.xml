@@ -38,25 +38,6 @@
             <version>${deltaspike-version}</version>
         </dependency>
 
-        <!-- OpenWebbeans -->
-        <dependency>
-            <groupId>org.apache.deltaspike.cdictrl</groupId>
-            <artifactId>deltaspike-cdictrl-owb</artifactId>
-            <version>${deltaspike-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.openwebbeans</groupId>
-            <artifactId>openwebbeans-impl</artifactId>
-            <version>${owb-version}</version>
-            <!--<scope>provided</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>org.apache.openwebbeans</groupId>
-            <artifactId>openwebbeans-spi</artifactId>
-            <version>${owb-version}</version>
-            <!--<scope>provided</scope>-->
-        </dependency>
-
         <!-- Servlet & JEE -->
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
@@ -80,10 +61,53 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>org.fusesource.example.cdi.camel.deltaspike.owb.BootStrap</mainClass>
+                    <mainClass>org.fusesource.example.cdi.camel.deltaspike.BootStrap</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>owb</id>
+            <dependencies>
+                <!-- OpenWebbeans -->
+                <dependency>
+                    <groupId>org.apache.deltaspike.cdictrl</groupId>
+                    <artifactId>deltaspike-cdictrl-owb</artifactId>
+                    <version>${deltaspike-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.openwebbeans</groupId>
+                    <artifactId>openwebbeans-impl</artifactId>
+                    <version>${owb-version}</version>
+                    <!--<scope>provided</scope>-->
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.openwebbeans</groupId>
+                    <artifactId>openwebbeans-spi</artifactId>
+                    <version>${owb-version}</version>
+                    <!--<scope>provided</scope>-->
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>weld</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.deltaspike.cdictrl</groupId>
+                    <artifactId>deltaspike-cdictrl-weld</artifactId>
+                    <version>${deltaspike-version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.weld.se</groupId>
+                    <artifactId>weld-se</artifactId>
+                    <version>${weld-version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+    </profiles>
 
 </project>

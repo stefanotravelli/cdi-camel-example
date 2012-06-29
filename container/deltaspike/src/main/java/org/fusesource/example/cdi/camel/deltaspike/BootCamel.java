@@ -1,22 +1,17 @@
-package org.fusesource.example.cdi.camel.deltaspike.weld;
+package org.fusesource.example.cdi.camel.deltaspike;
 
 import org.apache.camel.component.cdi.CdiCamelContext;
 import org.fusesource.example.cdi.camel.SimpleCamelRoute;
-import org.jboss.weld.environment.se.events.ContainerInitialized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import static org.apache.deltaspike.core.api.provider.BeanProvider.injectFields;
 
-/**
- * User: charlesmoulliard
- * Date: 16/02/12
- */
-public class BootStrap {
+public class BootCamel {
 
-    final private static Logger logger = LoggerFactory.getLogger(BootStrap.class);
+    final private static Logger logger = LoggerFactory.getLogger(BootCamel.class);
 
     @Inject
     protected CdiCamelContext camelCtx;
@@ -24,8 +19,9 @@ public class BootStrap {
     @Inject
     protected SimpleCamelRoute simpleRoute;
 
+    public  void init() throws Exception {
 
-    public void sayHelloCamelRoute(@Observes ContainerInitialized event) throws Exception {
+        injectFields(this);
 
         //You can use CDI here - since you can't inject a bean in this class directly use the BeanManagerProvider or the BeanProvider
         logger.info(">> Create CamelContext and register Camel Route.");
@@ -39,11 +35,7 @@ public class BootStrap {
         // Start Camel Context
         camelCtx.start();
 
-        Thread.sleep(2000);
-
         logger.info(">> CamelContext created and camel route started.");
-
     }
-
 
 }
