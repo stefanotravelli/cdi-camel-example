@@ -1,12 +1,19 @@
 package org.fusesource.example.cdi.camel.deltaspike.owb;
 
 import org.apache.camel.component.cdi.CdiCamelContext;
+import org.apache.deltaspike.cdise.api.CdiContainer;
+import org.apache.deltaspike.cdise.api.CdiContainerLoader;
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.fusesource.example.cdi.camel.SimpleCamelRoute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.enterprise.inject.spi.Bean;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
+import java.util.Set;
 
+import static org.apache.deltaspike.core.api.provider.BeanProvider.injectFields;
 
 /**
  * User: charlesmoulliard
@@ -16,38 +23,37 @@ public class BootStrap {
 
     final private static Logger logger = LoggerFactory.getLogger(BootStrap.class);
 
-    @Inject
-    protected static CdiCamelContext camelCtx;
-
-    @Inject
-    protected static SimpleCamelRoute simpleRoute;
-
-
     public static void main(String[] args) throws Exception {
 
-        CdiContainer cdiContainer = new CdiContainer();
-        cdiContainer.start();
+        CdiContainer cc = CdiContainerLoader.getCdiContainer();
+        cc.boot();
+        cc.getContextControl().startContexts();
+        logger.info(">> CDI container started");
 
-        init();
+        BootCamel bc = new BootCamel();
+        bc.init();
 
-        cdiContainer.stop();
+        Thread.sleep(2000);
+
+        cc.getContextControl().stopContexts();
+        cc.shutdown();
     }
 
-    public static void init() throws Exception {
-        //You can use CDI here - since you can't inject a bean in this class directly use the BeanManagerProvider or the BeanProvider
-        logger.info(">> Create CamelContext and register Camel Route.");
+    /*        BeanManager bm = cc.getBeanManager();
+ logger.info(">> BeanManager retrieved");
 
-        // Define Timer URI
-        simpleRoute.setTimerUri("timer://simple?fixedRate=true&period=10s");
+ Set<Bean<?>> beans = bm.getBeans(SimpleCamelRoute.class);
+ Bean<?> bean = bm.resolve(beans);
+ logger.info(">> Bean SimpleCamelRoute resolved");
 
-        // Add Camel Route
-        camelCtx.addRoutes(simpleRoute);
+ simpleRoute = (SimpleCamelRoute) bm.getReference(bean, SimpleCamelRoute.class, bm.createCreationalContext(bean));
+ logger.info(">> SimpleCamelRoute Bean created");
 
-        // Start Camel Context
-        camelCtx.start();
+ beans = bm.getBeans(CdiCamelContext.class);
+ bean = bm.resolve(beans);
+ logger.info(">> Bean CdiCamelContext resolved");
 
-        logger.info(">> CamelContext created and camel route started.");
-    }
-
+ camelCtx = (CdiCamelContext) bm.getReference(bean, CdiCamelContext.class, bm.createCreationalContext(bean));
+ logger.info(">> CamelContext Bean created");*/
 
 }
