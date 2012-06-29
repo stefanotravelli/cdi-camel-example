@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.fusesource.example.cdi.camel</groupId>
+        <artifactId>example-project</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>org.fusesource.example.cdi</groupId>
+    <artifactId>camel-common</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Example Camel CDI :: Common</name>
+
+    <properties>
+
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${war.plugin.version}</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.glassfish</groupId>
+                <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                <version>3.1.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.core</artifactId>
+                        <version>4.2.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <goalPrefix>glassfish</goalPrefix>
+                    <app>target/${project.name}-${project.version}.war</app>
+                    <port>8080</port>
+                    <contextRoot>${project.name}</contextRoot>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+
+        </plugins>
+    </build>
+
+</project>

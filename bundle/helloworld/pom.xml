@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.fusesource.example.cdi</groupId>
+        <artifactId>example-camel-project</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <groupId>org.fusesource.example.cdi</groupId>
+    <artifactId>bundle-helloworld</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+    <name>Example Camel CDI :: OSGI HelloWorld Bundle</name>
+
+    <properties>
+
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin-version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${bundle-plugin-version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>com.fusesource.cdi.bean*</Export-Package>
+                        <Import-Package>*</Import-Package>
+                        <Implementation-Title>HelloWorld CDI Example</Implementation-Title>
+                        <Implementation-Version>${project.version}</Implementation-Version>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+            <!--
+
+                        <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${bundle-plugin-version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Name>${project.name}</Bundle-Name>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>!com.fusesource.cdi.camel*</Export-Package>
+                        <Import-Package>
+                            org.apache.camel.impl,
+                            org.apache.camel.util,
+                            org.apache.camel.spi,
+                            org.apache.camel.component.cdi,
+                            *
+                        </Import-Package>
+                        <Private-Package>com.fusesource.cdi.camel.simple</Private-Package>
+                        <Implementation-Title>Apache Camel CDI Example</Implementation-Title>
+                        <Implementation-Version>${project.version}</Implementation-Version>
+                        <Include-Resource>${project.basedir}/src/main/resources</Include-Resource>
+                        <_failok>false</_failok>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+            -->
+
+
+        </plugins>
+    </build>
+
+</project>
