@@ -33,7 +33,7 @@ public class BootStrap {
         cdiContainer.stop();
     }
 
-    public static void init() {
+    public static void init() throws Exception {
         //You can use CDI here - since you can't inject a bean in this class directly use the BeanManagerProvider or the BeanProvider
         logger.info(">> Create CamelContext and register Camel Route.");
 
