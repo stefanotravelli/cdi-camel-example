@@ -30,7 +30,6 @@ public class CamelConfigure {
     protected String timerEndpointDefinedWithCDIProperty;
 
     // protected String timerEndpointDefinedUsingCamelAnnotation = "timer://simple?fixedRate=true&period=5s";
-    @Inject
     @EndpointInject(uri = "timer://simple?fixedRate=true&period=5s")
     protected String timerEndpointDefinedUsingCamelAnnotation;
 
