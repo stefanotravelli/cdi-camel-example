@@ -1,6 +1,7 @@
 package org.fusesource.example.cdi.camel.deltaspike.spi;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Endpoint;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.component.cdi.CdiCamelContext;
 import org.apache.camel.impl.CamelPostProcessorHelper;
@@ -53,7 +54,7 @@ public class CamelAnnotationsExtension extends CamelPostProcessorHelper implemen
         String uri = inject.uri();
         String endpointRef = inject.ref();
 
-        cph.getInjectionValue(EndpointInject.class, uri, endpointRef, injectionPointName, null, null);
+        cph.getInjectionValue(Endpoint.class, uri, endpointRef, injectionPointName, null, null);
 
 
     }
