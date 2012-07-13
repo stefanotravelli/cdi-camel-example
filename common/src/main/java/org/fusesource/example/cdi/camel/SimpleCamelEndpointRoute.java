@@ -9,15 +9,18 @@ import org.apache.camel.builder.RouteBuilder;
  */
 public class SimpleCamelEndpointRoute extends RouteBuilder {
 
-    private Endpoint timerUri;
+    private Endpoint timerEndpoint;
+
+    public SimpleCamelEndpointRoute() {
+        System.out.println(">> SimpleCamelEndpointRoute instantiated");
+    }
 
     @Override
     public void configure() throws Exception {
 
-        from(timerUri)
+        from(timerEndpoint)
             // Set Body with text "Bean Injected"
             .setBody().simple("Bean Injected")
-
             // Lookup for bean injected by CDIcontainer
             .beanRef("helloWorld", "sayHello")
             // Display response received in log when calling HelloWorld
@@ -25,8 +28,8 @@ public class SimpleCamelEndpointRoute extends RouteBuilder {
 
     }
 
-    public void setTimerUri(Endpoint timerUri) {
-        this.timerUri = timerUri;
+    public void setTimerEndpoint(Endpoint timerEndpoint) {
+        this.timerEndpoint = timerEndpoint;
     }
 
 }

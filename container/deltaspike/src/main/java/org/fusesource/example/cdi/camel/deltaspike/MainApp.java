@@ -16,16 +16,17 @@ public class MainApp {
 
     final private static Logger logger = LoggerFactory.getLogger(MainApp.class);
 
-    @Inject
+    // @Inject
     // Example 1
     // We will use a Simple Camel Route
     // where the timer Endpoint is defined using Camel Annotation (EndpointInject)
-    @CamelRoute(Type.SIMPLE)
+    // @CamelRoute(Type.ENDPOINT)
 
     // Example 2
     // We use a Simple Camel Route
     // where the timer Endpoint is defined using CDI Extension with ConfigSource
-    // @CamelRoute(Type.SIMPLE_WITH_PROPERTY)
+    // @CamelRoute(Type.CDI_PROPERTY)
+
     public CamelConfigure camelConfigure;
 
     public static void main(String[] args) throws Exception {
@@ -36,10 +37,14 @@ public class MainApp {
         logger.info(">> CDI container started");
 
         MainApp mainApp = new MainApp();
-        BeanProvider.injectFields(mainApp);
+
+        mainApp.camelConfigure = new CamelConfigure();
+        mainApp.camelConfigure.configRoute(Type.CDI_PROPERTY);
+        // mainApp.camelConfigure.configRoute(Type.ENDPOINT);
 
         // Call init method to start camel route
-        mainApp.camelConfigure.addRouteAndStart();
+        mainApp.camelConfigure.startRoute(Type.CDI_PROPERTY);
+        // mainApp.camelConfigure.startRoute(Type.ENDPOINT);
 
         Thread.sleep(2000);
 

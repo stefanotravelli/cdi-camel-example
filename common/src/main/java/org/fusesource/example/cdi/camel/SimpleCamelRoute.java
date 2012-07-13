@@ -11,13 +11,16 @@ public class SimpleCamelRoute extends RouteBuilder {
 
     private String timerUri;
 
+    public SimpleCamelRoute() {
+        System.out.println(">> SimpleCamelRoute instantiated");
+    }
+
     @Override
     public void configure() throws Exception {
 
         from(timerUri)
             // Set Body with text "Bean Injected"
             .setBody().simple("Bean Injected")
-
             // Lookup for bean injected by CDIcontainer
             .beanRef("helloWorld", "sayHello")
             // Display response received in log when calling HelloWorld

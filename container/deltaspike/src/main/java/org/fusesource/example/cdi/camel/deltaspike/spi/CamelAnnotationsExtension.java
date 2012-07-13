@@ -28,13 +28,17 @@ public class CamelAnnotationsExtension extends CamelPostProcessorHelper implemen
         for(AnnotatedField af : fields) {
             Annotation a = af.getAnnotation(EndpointInject.class);
             if (a != null) {
+
                inject = (EndpointInject)a;
+
                System.out.println("Endpoint inject ref : " + inject.ref());
                System.out.println("Endpoint inject uri : " + inject.uri());
                System.out.println("Endpoint inject context : " + inject.context());
 
-                Field f = af.getJavaMember();
-                typeRetrieved = f.getDeclaringClass();
+               Field f = af.getJavaMember();
+               typeRetrieved = f.getDeclaringClass();
+
+               System.out.println("Endpoint inject retrieved in  : " + typeRetrieved);
 
             }
 

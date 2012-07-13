@@ -9,21 +9,20 @@ import org.fusesource.example.cdi.camel.SimpleCamelRoute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.event.Observes;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.Extension;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.inject.Inject;
-import javax.inject.Qualifier;
+import javax.inject.Singleton;
 
 import static org.apache.deltaspike.core.api.provider.BeanProvider.injectFields;
 
+@ApplicationScoped
 public class CamelConfigure {
 
     final private static Logger logger = LoggerFactory.getLogger(CamelConfigure.class);
 
     @Inject
-    protected CdiCamelContext camelCtx;
+    protected CdiCamelContext ctx;
 
     @Inject
     protected SimpleCamelRoute simpleRoute;
@@ -33,53 +32,44 @@ public class CamelConfigure {
 
     @Inject
     @ConfigProperty(name = "timerEndpoint")
-    protected String timerEndpointDefinedWithCDIProperty;
+    protected String timerUriDefinedWithCDIProperty;
 
-    // protected String timerEndpointDefinedUsingCamelAnnotation = "timer://simple?fixedRate=true&period=5s";
     @EndpointInject(uri = "timer://simple?fixedRate=true&period=5s")
     protected Endpoint timerEndpoint;
+
+    @Produces
+    @CamelRoute(Type.CDI_PROPERTY)
+    public void useRouteWithCDIPropertyForUri() throws Exception {
+        simpleRoute.setTimerUri(timerUriDefinedWithCDIProperty);
+    }
+
+    @Produces
+    @CamelRoute(Type.ENDPOINT)
+    public void useRouteWithEndpointInject() throws Exception {
+        simpleEndpointRoute.setTimerEndpoint(timerEndpoint);
+    }
 
     public CamelConfigure() {
         injectFields(this);
     }
 
-    @Produces
-    @CamelRoute(Type.SIMPLE_WITH_PROPERTY)
-    public CamelConfigure getSimpleRouteUsingCDIPropertyForEndpoint() {
-        CamelConfigure camelConfigure = new CamelConfigure();
-        camelConfigure.useCdiPropertyToDefineTimerEndpoint();
-        return camelConfigure;
+    public void configRoute(Type type) {
+        switch (type) {
+            case CDI_PROPERTY:
+                simpleRoute.setTimerUri(timerUriDefinedWithCDIProperty); break;
+            case ENDPOINT:
+                simpleEndpointRoute.setTimerEndpoint(timerEndpoint); break;
+        }
     }
 
-    @Produces
-    @CamelRoute(Type.SIMPLE)
-    public CamelConfigure getSimpleRoute() {
-        CamelConfigure camelConfigure = new CamelConfigure();
-        camelConfigure.useCamelEndpointInjectToDefineTimerEndpoint();
-        return camelConfigure;
-    }
-
-    public void useCdiPropertyToDefineTimerEndpoint() {
-        simpleRoute.setTimerUri(timerEndpointDefinedWithCDIProperty);
-    }
-
-    public void useCamelEndpointInjectToDefineTimerEndpoint() {
-        simpleEndpointRoute.setTimerUri(timerEndpoint);
-    }
-
-    public void addRouteAndStart() throws Exception {
-
-        //You can use CDI here - since you can't inject a bean in this class directly use the BeanManagerProvider or the BeanProvider
-        logger.info(">> Create CamelContext and register Camel Route.");
-
-        // Add Camel Route
-        // camelCtx.addRoutes(simpleRoute);
-        camelCtx.addRoutes(simpleEndpointRoute);
-
-        // Start Camel Context
-        camelCtx.start();
-
-        logger.info(">> CamelContext created and camel route started.");
+    public void startRoute(Type type) throws Exception {
+        switch (type) {
+            case CDI_PROPERTY:
+                ctx.addRoutes(simpleRoute); break;
+            case ENDPOINT:
+                ctx.addRoutes(simpleEndpointRoute); break;
+        }
+        ctx.start();
     }
 
 }
