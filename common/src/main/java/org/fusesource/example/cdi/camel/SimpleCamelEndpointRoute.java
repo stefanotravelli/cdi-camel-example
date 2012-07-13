@@ -7,9 +7,9 @@ import org.apache.camel.builder.RouteBuilder;
  * User: charlesmoulliard
  * Date: 16/02/12.
  */
-public class SimpleCamelRoute extends RouteBuilder {
+public class SimpleCamelEndpointRoute extends RouteBuilder {
 
-    private String timerUri;
+    private Endpoint timerUri;
 
     @Override
     public void configure() throws Exception {
@@ -25,7 +25,7 @@ public class SimpleCamelRoute extends RouteBuilder {
 
     }
 
-    public void setTimerUri(String timerUri) {
+    public void setTimerUri(Endpoint timerUri) {
         this.timerUri = timerUri;
     }
 

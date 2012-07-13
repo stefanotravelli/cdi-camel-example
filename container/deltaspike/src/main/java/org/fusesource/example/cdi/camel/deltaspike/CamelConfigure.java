@@ -1,8 +1,11 @@
 package org.fusesource.example.cdi.camel.deltaspike;
 
+import org.apache.camel.Endpoint;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.component.cdi.CdiCamelContext;
 import org.apache.deltaspike.core.api.config.annotation.ConfigProperty;
+import org.fusesource.example.cdi.camel.SimpleCamelEndpointRoute;
+import org.fusesource.example.cdi.camel.SimpleCamelRoute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +26,10 @@ public class CamelConfigure {
     protected CdiCamelContext camelCtx;
 
     @Inject
-    protected org.fusesource.example.cdi.camel.SimpleCamelRoute simpleRoute;
+    protected SimpleCamelRoute simpleRoute;
+
+    @Inject
+    protected SimpleCamelEndpointRoute simpleEndpointRoute;
 
     @Inject
     @ConfigProperty(name = "timerEndpoint")
@@ -31,8 +37,7 @@ public class CamelConfigure {
 
     // protected String timerEndpointDefinedUsingCamelAnnotation = "timer://simple?fixedRate=true&period=5s";
     @EndpointInject(uri = "timer://simple?fixedRate=true&period=5s")
-    protected String timerEndpointDefinedUsingCamelAnnotation;
-
+    protected Endpoint timerEndpoint;
 
     public CamelConfigure() {
         injectFields(this);
@@ -59,7 +64,7 @@ public class CamelConfigure {
     }
 
     public void useCamelEndpointInjectToDefineTimerEndpoint() {
-        simpleRoute.setTimerUri(timerEndpointDefinedUsingCamelAnnotation);
+        simpleEndpointRoute.setTimerUri(timerEndpoint);
     }
 
     public void addRouteAndStart() throws Exception {
@@ -68,7 +73,8 @@ public class CamelConfigure {
         logger.info(">> Create CamelContext and register Camel Route.");
 
         // Add Camel Route
-        camelCtx.addRoutes(simpleRoute);
+        // camelCtx.addRoutes(simpleRoute);
+        camelCtx.addRoutes(simpleEndpointRoute);
 
         // Start Camel Context
         camelCtx.start();
