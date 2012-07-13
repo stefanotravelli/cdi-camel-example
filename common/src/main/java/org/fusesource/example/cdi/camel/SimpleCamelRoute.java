@@ -14,16 +14,12 @@ public class SimpleCamelRoute extends RouteBuilder {
     public void configure() throws Exception {
 
         from(timerUri)
-            .setBody()
-                .simple("Bean Injected")
+            // Set Body with text "Bean Injected"
+            .setBody().simple("Bean Injected")
 
-                    // Lookup for bean injected by CDIcontainer
-                    // The HellowWorld class is annotated using @Named
+            // Lookup for bean injected by CDIcontainer
             .beanRef("helloWorld", "sayHello")
-
-                    // Using Camel lookup mechanism
-                    // .bean(HelloWorld.class,"sayHello")
-
+            // Display response received in log when calling HelloWorld
             .log(">> Response : ${body}");
 
     }
