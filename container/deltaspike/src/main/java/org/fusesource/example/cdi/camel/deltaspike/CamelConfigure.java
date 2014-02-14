@@ -3,7 +3,7 @@ package org.fusesource.example.cdi.camel.deltaspike;
 import org.apache.camel.Endpoint;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.component.cdi.CdiCamelContext;
-import org.apache.deltaspike.core.api.config.annotation.ConfigProperty;
+import org.apache.deltaspike.core.api.config.ConfigProperty;
 import org.fusesource.example.cdi.camel.SimpleCamelEndpointRoute;
 import org.fusesource.example.cdi.camel.SimpleCamelRoute;
 import org.slf4j.Logger;

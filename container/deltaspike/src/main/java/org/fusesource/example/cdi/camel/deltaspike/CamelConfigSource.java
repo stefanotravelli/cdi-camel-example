@@ -2,7 +2,7 @@ package org.fusesource.example.cdi.camel.deltaspike;
 
 import org.apache.deltaspike.core.api.config.*;
 
-public class CamelConfigSource implements PropertyConfigSource {
+public class CamelConfigSource implements PropertyFileConfig {
 
     @Override
     public String getPropertyFileName() {
